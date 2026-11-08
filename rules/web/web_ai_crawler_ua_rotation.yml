@@ -18,7 +18,7 @@ date: 2026-11-05
 tags:
     - attack.reconnaissance
     - attack.t1595.002
-    - attack.defense-evasion
+    - attack.stealth
     - attack.t1036
 correlation:
     type: value_count
