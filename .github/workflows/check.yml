@@ -1,0 +1,21 @@
+name: check
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  sigma:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pySigma
+        run: pip install "sigma-cli==4.0.0" "pysigma-backend-sqlite==2.1.1"
+      - name: Validate rules
+        # escaped_wildcard flags the deliberate \? escapes in the Vite rules
+        run: sigma check --fail-on-issues --fail-on-error -x escaped_wildcard rules/
+      - name: Run sample tests
+        run: python tests/run_tests.py

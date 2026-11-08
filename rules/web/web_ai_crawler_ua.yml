@@ -1,0 +1,54 @@
+title: AI Crawler User-Agent Seen
+id: 8ab9434f-9f1a-45a5-a0dc-1617b5292bd1
+name: web_ai_crawler_ua
+status: experimental
+description: |
+    Base rule. Matches requests whose user agent claims to be a known AI or search
+    crawler. On its own this is informational: most matches are real crawlers.
+    It exists to feed the UA-rotation correlation below.
+references:
+    - https://browncyber.com/research/uqscan-one-pipeline
+    - https://github.com/ai-robots-txt/ai.robots.txt
+author: Daniel F. Brown (Brown Cyber Services)
+license: DRL-1.1
+date: 2026-11-05
+tags:
+    - attack.reconnaissance
+    - attack.t1595.002
+    - attack.defense-evasion
+    - attack.t1036
+logsource:
+    category: webserver
+detection:
+    selection:
+        cs-user-agent|contains:
+            - 'GPTBot'
+            - 'ChatGPT-User'
+            - 'OAI-SearchBot'
+            - 'ClaudeBot'
+            - 'Claude-User'
+            - 'Claude-SearchBot'
+            - 'anthropic-ai'
+            - 'PerplexityBot'
+            - 'Perplexity-User'
+            - 'Bytespider'
+            - 'CCBot'
+            - 'cohere-ai'
+            - 'DeepSeekBot'
+            - 'Kimi-SearchBot'
+            - 'Bravebot'
+            - 'meta-externalagent'
+            - 'meta-externalfetcher'
+            - 'Baiduspider'
+            - 'Googlebot'
+            - 'bingbot'
+            - 'Applebot'
+            - 'Amazonbot'
+            - 'PetalBot'
+            - 'MistralAI-User'
+            - 'YouBot'
+            - 'Diffbot'
+    condition: selection
+falsepositives:
+    - Almost all matches are legitimate crawlers. Do not alert on this rule alone.
+level: informational

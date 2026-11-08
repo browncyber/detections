@@ -1,0 +1,42 @@
+title: AI Crawler User-Agent Rotation From One Source
+id: 2d215805-70a7-4e36-b7e4-ba51e667acee
+status: experimental
+description: |
+    One client address presents three or more different AI or search crawler user
+    agents within ten minutes. Real crawlers keep one identity per source; scanners
+    rotate through crawler names to blend in or to slip past bot allowlists.
+    Observed on a disclosed honeypot in October 2026: one scanner sent six crawler
+    names in a minute against /.env and /.git/config; a second, on a public cloud,
+    sent 36 requests in hourly bursts drawn from sixteen crawler names and ordinary
+    browser strings. None of the claimed names came from its operator's network.
+references:
+    - https://browncyber.com/research/uqscan-one-pipeline
+    - https://github.com/browncyber/detections/blob/main/rules/web/web_ai_crawler_ua.yml
+author: Daniel F. Brown (Brown Cyber Services)
+license: DRL-1.1
+date: 2026-11-05
+tags:
+    - attack.reconnaissance
+    - attack.t1595.002
+    - attack.defense-evasion
+    - attack.t1036
+correlation:
+    type: value_count
+    rules:
+        - web_ai_crawler_ua
+    group-by:
+        - c-ip
+    timespan: 10m
+    condition:
+        gte: 3
+        field: cs-user-agent
+falsepositives:
+    - |
+        One crawler with several UA variants from one address (Googlebot desktop,
+        smartphone and image strings; Applebot variants). This rule counts distinct
+        UA strings, not distinct crawler names. If that is noisy, raise the
+        threshold to 4, or extract the crawler name into its own field at ingest
+        and count that instead.
+    - Shared egress (corporate proxy, carrier NAT, a CDN or serverless platform
+      fronting many tenants) can put several real clients behind one address.
+level: medium

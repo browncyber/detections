@@ -1,0 +1,47 @@
+title: Vite Dev Server File-Read Bypass Probe
+id: f79ade11-ade8-48ee-8d00-daf1fb53d7c3
+status: experimental
+description: |
+    Requests carrying the query-string markers of the 2025 Vite dev-server
+    server.fs.deny bypasses. Vite dev servers are only exposed when started with
+    --host or server.host; production sites built with Vite never use these
+    query strings, so on a production host any match is a scanner.
+    Seen on a disclosed honeypot I run, Oct-Nov 2026, aimed at /.env:
+    /.env?raw, /.env?import&raw, /.env?import&url&inline, /.env?.svg?.wasm?init,
+    in some cases from scanners rotating AI-crawler user agents.
+references:
+    - https://github.com/vitejs/vite/security/advisories/GHSA-x574-m823-4x7w
+    - https://github.com/vitejs/vite/security/advisories/GHSA-4r4m-qw57-chr8
+    - https://nvd.nist.gov/vuln/detail/CVE-2025-31486
+    - https://browncyber.com/research/uqscan-one-pipeline
+author: Daniel F. Brown (Brown Cyber Services)
+license: DRL-1.1
+date: 2026-11-06
+tags:
+    - attack.initial-access
+    - attack.t1190
+    - attack.credential-access
+    - attack.t1552.001
+    - cve.2025-30208
+    - cve.2025-31125
+    - cve.2025-31486
+logsource:
+    category: webserver
+detection:
+    bypass_marker:
+        cs-uri-query|contains:
+            - 'raw\?\?'            # CVE-2025-30208: ?raw?? and ?import&raw??
+            - 'import&raw'       # CVE-2025-30208 (trailing ?? may be stripped by the logger)
+            - 'raw\?import'       # CVE-2025-31125
+            - 'raw&import'       # CVE-2025-31125 variant
+            - 'inline&import'    # CVE-2025-31125
+            - 'import&\?inline'   # CVE-2025-31125 PoC (?import&?inline=1.wasm?init)
+            - 'import&url&inline'  # observed variant of the same family
+            - '.wasm\?init'       # CVE-2025-31125 PoC and CVE-2025-31486
+            - '.svg\?.wasm'       # CVE-2025-31486 (?.svg?.wasm?init)
+    condition: bypass_marker
+falsepositives:
+    - A Vite dev server deliberately exposed to the network and used by its own
+      developers. Real dev traffic uses ?import, ?raw, ?inline and ?url, but not
+      these combinations against secret files.
+level: medium

@@ -1,0 +1,13 @@
+{"id": 1, "ts": "2026-11-06 10:00:00", "ip": "scanner-a", "ua": "Mozilla/5.0 (compatible; GPTBot/1.2)", "path": "/.env", "expect": ["web_ai_crawler_ua", "rotation", "secret_files"]}
+{"id": 2, "ts": "2026-11-06 10:00:30", "ip": "scanner-a", "ua": "Mozilla/5.0 (compatible; ClaudeBot/1.0)", "path": "/.git/config", "expect": ["web_ai_crawler_ua", "rotation", "secret_files"]}
+{"id": 3, "ts": "2026-11-06 10:01:00", "ip": "scanner-a", "ua": "Mozilla/5.0 (compatible; Bytespider)", "path": "/admin", "expect": ["web_ai_crawler_ua", "rotation"]}
+{"id": 4, "ts": "2026-11-06 12:00:00", "ip": "crawler-b", "ua": "Mozilla/5.0 (compatible; Bravebot/1.0)", "path": "/research/note", "expect": ["web_ai_crawler_ua"]}
+{"id": 5, "ts": "2026-11-06 15:00:00", "ip": "crawler-b", "ua": "Mozilla/5.0 (compatible; Bravebot/1.0)", "path": "/", "expect": ["web_ai_crawler_ua"]}
+{"id": 6, "ts": "2026-11-06 13:00:00", "ip": "vite-c", "ua": "curl/8.5.0", "path": "/.env?import&raw", "expect": ["vite_probe", "vite_secrets"]}
+{"id": 7, "ts": "2026-11-06 13:00:01", "ip": "vite-c", "ua": "curl/8.5.0", "path": "/.env?raw", "expect": ["vite_secrets"]}
+{"id": 8, "ts": "2026-11-06 13:00:02", "ip": "vite-c", "ua": "curl/8.5.0", "path": "/.env?.svg?.wasm?init", "expect": ["vite_probe", "vite_secrets"]}
+{"id": 9, "ts": "2026-11-06 13:00:03", "ip": "vite-c", "ua": "curl/8.5.0", "path": "/@fs/etc/passwd?import&?inline=1.wasm?init", "expect": ["vite_probe", "vite_secrets"]}
+{"id": 10, "ts": "2026-11-06 13:05:00", "ip": "dev-d", "ua": "Mozilla/5.0 (Macintosh)", "path": "/src/App.vue?import", "expect": []}
+{"id": 11, "ts": "2026-11-06 13:05:01", "ip": "dev-d", "ua": "Mozilla/5.0 (Macintosh)", "path": "/src/logo.svg?import&url", "expect": []}
+{"id": 12, "ts": "2026-11-06 13:05:02", "ip": "dev-d", "ua": "Mozilla/5.0 (Macintosh)", "path": "/drawing?raw=1", "expect": []}
+{"id": 13, "ts": "2026-11-06 14:00:00", "ip": "browser-e", "ua": "Mozilla/5.0 (Windows NT 10.0)", "path": "/.env", "expect": []}
